@@ -1,0 +1,22 @@
+version: '3.3'
+services:
+  joomla:
+    image: joomla
+    restart: always
+    links:
+      - wordpressdb-deikun:mysql
+    ports:
+      - 8080:80
+    environment:
+      JOOMLA_DB_HOST: wordpressdb-deikun
+      JOOMLA_DB_PASSWORD: secret
+  wordpressdb-deikun:
+    image: mariadb:latest
+    restart: always
+    volumes:
+      - "/opt/mysql:/var/lib/mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
